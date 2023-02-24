@@ -1,19 +1,26 @@
-import React from 'react';
-import logo from './img/logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import ModeForm from "./components/Mode-form";
+
+export interface Mode {
+  name: string;
+  field: number;
+}
 
 function App() {
+  const [modes, setModes] = useState<Mode[] | []>([]);
+  const [curMode, setCurMode] = useState<string | ''>('');
+
+  useEffect(() => {
+    fetch('https://demo7919674.mockable.io/')
+      .then((respond) => respond.json())
+      .then(data => {
+        setModes(data);
+      });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ModeForm modes={modes} curMode={curMode} setCurMode={setCurMode}/>
     </div>
   );
 }

@@ -9,7 +9,6 @@ interface ModeFromProps {
 
 const ModeForm:FC<ModeFromProps> = ({modes, curMode, setCurMode}) => {
 
-
   const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) => {
     setCurMode(e.target.value);
   };
@@ -24,8 +23,7 @@ const ModeForm:FC<ModeFromProps> = ({modes, curMode, setCurMode}) => {
         <label>
           <select name="" id="mode" onChange={handleSelect}>
             <option value="">Pick the mode</option>
-            {
-              modes.length > 0 && modes.map((item, i) => (
+            {modes.length > 0 && modes.map((item, i) => (
                   <option key={`option-${i}`} value={item.field}>{item.name}</option>
                 ))
             }

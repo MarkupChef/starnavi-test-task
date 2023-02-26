@@ -1,0 +1,15 @@
+.grid {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-gap: 1px;
+  background-color: black;
+  border: 1px solid black;
+}
+
+.gridItem {
+  background-color: #fff;
+
+  &--active {
+    background-color: #61dafb;
+  }
+}

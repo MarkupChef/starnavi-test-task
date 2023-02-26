@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ModeForm from "./components/Mode-form";
+import Grid from "./components/Grid";
+import { GlobalContext } from "./hooks/useGlobalContext";
 
 export interface Mode {
   name: string;
@@ -9,6 +11,7 @@ export interface Mode {
 function App() {
   const [modes, setModes] = useState<Mode[] | []>([]);
   const [curMode, setCurMode] = useState<string | ''>('');
+  const [hoveredCols, setHoveredCols] = useState<number[]>([]);
 
   useEffect(() => {
     fetch('https://demo7919674.mockable.io/')
@@ -18,10 +21,17 @@ function App() {
       });
   }, []);
 
+
   return (
-    <div>
-      <ModeForm modes={modes} curMode={curMode} setCurMode={setCurMode}/>
-    </div>
+    <GlobalContext.Provider value={{hoveredCols, setHoveredCols}}>
+      <div>
+        <ModeForm modes={modes} curMode={curMode} setCurMode={setCurMode}/>
+        <br/>
+        <br/>
+        <br/>
+        {curMode && <Grid mode={curMode}/>}
+      </div>
+    </GlobalContext.Provider>
   );
 }
 

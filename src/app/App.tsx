@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ModeForm from "./components/Mode-form";
 import Grid from "./components/Grid";
 import { GlobalContext } from "./hooks/useGlobalContext";
+import Board from "./components/Board";
 
 export interface Mode {
   name: string;
@@ -30,6 +31,7 @@ function App() {
         <br/>
         <br/>
         {curMode && <Grid mode={curMode}/>}
+        {curMode && <Board mode={curMode} hoveredCols={hoveredCols}/>}
       </div>
     </GlobalContext.Provider>
   );

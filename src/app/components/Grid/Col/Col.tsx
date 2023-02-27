@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 
 interface ColProps {
@@ -31,7 +31,7 @@ const Col:FC<ColProps> = ({id}) => {
   };
 
   return (
-    <div style={{backgroundColor: hovered ? 'blue': 'white'}} onMouseOver={handleOver} className={'gridItem'}>{id}</div>
+    <div onMouseOver={handleOver} className={`gridItem ${hovered ? 'bg-pink-400' : 'bg-white'}`}></div>
   );
 };
 

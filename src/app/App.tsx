@@ -17,14 +17,25 @@ function App() {
   return (
     <>
     <GlobalContext.Provider value={{started, setStarted, hoveredCols, setHoveredCols}}>
-      <div>
-        <ModeForm setStartMode={setStartMode}/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        {startMode && <Grid mode={startMode}/>}
-        {startMode && <Board mode={startMode}/>}
+      <div className={'flex p-8 min-h-screen'}>
+        <div className={'shrink-0 mr-8'}>
+          <div className={'min-h-full bg-white rounded-2xl p-8 flex flex-col'}>
+            <div className={'mb-6'}>
+              <ModeForm setStartMode={setStartMode}/>
+            </div>
+
+            <div className={'grow flex flex-col'}>
+              {startMode && <Board mode={startMode} />}
+            </div>
+          </div>
+        </div>
+        <div className={'grow'}>
+          {startMode &&
+            <div className={'bg-white rounded-2xl p-8'}>
+              <Grid mode={+startMode}/>
+            </div>
+          }
+        </div>
       </div>
     </GlobalContext.Provider>
     </>

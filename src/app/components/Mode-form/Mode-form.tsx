@@ -1,13 +1,28 @@
-import React, {FC, SetStateAction} from 'react';
+import React, { FC, SetStateAction, useEffect, useState } from "react";
 import {Mode} from "../../App";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 interface ModeFromProps {
-  modes: Mode[] | [];
-  curMode: string;
-  setCurMode: React.Dispatch<SetStateAction<string>>;
+  setStartMode: React.Dispatch<SetStateAction<string>>;
 }
 
-const ModeForm:FC<ModeFromProps> = ({modes, curMode, setCurMode}) => {
+const ModeForm:FC<ModeFromProps> = ({setStartMode}) => {
+  const [modes, setModes] = useState<Mode[] | []>([]);
+  const [curMode, setCurMode] = useState<string | ''>('');
+  const {setStarted, setHoveredCols} = useGlobalContext();
+
+  useEffect(() => {
+    fetch('https://demo7919674.mockable.io/')
+      .then((respond) => respond.json())
+      .then(data => {
+        setModes(data);
+      });
+  }, []);
+
+  const reset = () => {
+    setStarted(false);
+    setHoveredCols([]);
+  }
 
   const handleSelect = (e:React.ChangeEvent<HTMLSelectElement>) => {
     setCurMode(e.target.value);
@@ -15,6 +30,12 @@ const ModeForm:FC<ModeFromProps> = ({modes, curMode, setCurMode}) => {
 
   const handleSubmit = (e:React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    reset();
+
+    if (curMode) {
+      setStartMode(curMode);
+    }
   };
 
   return (
@@ -36,4 +57,4 @@ const ModeForm:FC<ModeFromProps> = ({modes, curMode, setCurMode}) => {
   );
 };
 
-export default ModeForm;
+export default React.memo(ModeForm);

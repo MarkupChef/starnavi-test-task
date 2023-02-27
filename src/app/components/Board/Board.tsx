@@ -1,11 +1,13 @@
 import React, { FC } from "react";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 interface BoardProps {
   mode: string;
-  hoveredCols: number[];
 }
 
-const Board:FC<BoardProps> = ({mode, hoveredCols}) => {
+const Board:FC<BoardProps> = ({mode}) => {
+  const { hoveredCols } = useGlobalContext();
+
   return (
     <div>
       <h2>Hovered squares:</h2>

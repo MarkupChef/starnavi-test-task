@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useGlobalContext } from "../../../hooks/useGlobalContext";
 
 interface ColProps {
@@ -7,9 +7,19 @@ interface ColProps {
 
 const Col:FC<ColProps> = ({id}) => {
   const [hovered, setHovered] = useState(false);
-  const { setHoveredCols } = useGlobalContext();
+  const {started, setStarted, setHoveredCols} = useGlobalContext();
+
+  useLayoutEffect(() => {
+    if (!started) {
+      setHovered(false);
+    }
+  }, [started]);
 
   const handleOver = () => {
+
+    if (!started) {
+      setStarted(true);
+    }
 
     if (hovered) {
       setHoveredCols((prevArray) => prevArray.filter((item, i) => item !== id));

@@ -24,4 +24,4 @@ const Grid:FC<GridProps> = ({mode}) => {
   );
 };
 
-export default Grid;
+export default React.memo(Grid);

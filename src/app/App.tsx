@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ModeForm from "./components/Mode-form";
 import Grid from "./components/Grid";
 import { GlobalContext } from "./hooks/useGlobalContext";
@@ -10,30 +10,24 @@ export interface Mode {
 }
 
 function App() {
-  const [modes, setModes] = useState<Mode[] | []>([]);
-  const [curMode, setCurMode] = useState<string | ''>('');
+  const [startMode, setStartMode] = useState('');
+  const [started, setStarted] = useState(false);
   const [hoveredCols, setHoveredCols] = useState<number[]>([]);
 
-  useEffect(() => {
-    fetch('https://demo7919674.mockable.io/')
-      .then((respond) => respond.json())
-      .then(data => {
-        setModes(data);
-      });
-  }, []);
-
-
   return (
-    <GlobalContext.Provider value={{hoveredCols, setHoveredCols}}>
+    <>
+    <GlobalContext.Provider value={{started, setStarted, hoveredCols, setHoveredCols}}>
       <div>
-        <ModeForm modes={modes} curMode={curMode} setCurMode={setCurMode}/>
+        <ModeForm setStartMode={setStartMode}/>
         <br/>
         <br/>
         <br/>
-        {curMode && <Grid mode={curMode}/>}
-        {curMode && <Board mode={curMode} hoveredCols={hoveredCols}/>}
+        <br/>
+        {startMode && <Grid mode={startMode}/>}
+        {startMode && <Board mode={startMode}/>}
       </div>
     </GlobalContext.Provider>
+    </>
   );
 }
 

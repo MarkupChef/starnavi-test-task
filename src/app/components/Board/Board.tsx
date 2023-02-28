@@ -1,12 +1,12 @@
-import React, { FC } from "react";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
+import React, { FC, useContext } from 'react';
+import GlobalContext from '../../hooks/useGlobalContext';
 
 interface BoardProps {
   mode: string;
 }
 
 const Board:FC<BoardProps> = ({mode}) => {
-  const { hoveredCols } = useGlobalContext();
+  const { hoveredCols } = useContext(GlobalContext);
 
   return (
     <div className={'grow flex flex-col h-full'}>

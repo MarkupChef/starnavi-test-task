@@ -1,6 +1,6 @@
-import React, { FC, SetStateAction, useEffect, useState } from "react";
+import React, { FC, SetStateAction, useContext, useEffect, useState } from 'react';
 import {Mode} from "../../App";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
+import GlobalContext from '../../hooks/useGlobalContext';
 
 interface ModeFromProps {
   setStartMode: React.Dispatch<SetStateAction<string>>;
@@ -9,7 +9,7 @@ interface ModeFromProps {
 const ModeForm:FC<ModeFromProps> = ({setStartMode}) => {
   const [modes, setModes] = useState<Mode[] | []>([]);
   const [curMode, setCurMode] = useState<string | ''>('');
-  const {setStarted, setHoveredCols} = useGlobalContext();
+  const {setStarted, setHoveredCols} = useContext(GlobalContext);
 
   useEffect(() => {
     fetch('https://demo7919674.mockable.io/')
@@ -20,7 +20,7 @@ const ModeForm:FC<ModeFromProps> = ({setStartMode}) => {
   }, []);
 
   const reset = () => {
-    setStarted(false);
+    setStarted(Date.now());
     setHoveredCols([]);
   };
 
@@ -65,4 +65,4 @@ const ModeForm:FC<ModeFromProps> = ({setStartMode}) => {
   );
 };
 
-export default React.memo(ModeForm);
+export default ModeForm;

@@ -1,28 +1,23 @@
-import React, { FC, useLayoutEffect, useState } from "react";
-import { useGlobalContext } from "../../../hooks/useGlobalContext";
+import React, { FC, SetStateAction, useLayoutEffect, useMemo, useState } from 'react';
 
 interface ColProps {
+  started: number;
   id: number;
+  setHoveredCols: React.Dispatch<SetStateAction<number[]>>;
 }
 
-const Col:FC<ColProps> = ({id}) => {
+const Col:FC<ColProps> = ({started, id, setHoveredCols}) => {
   const [hovered, setHovered] = useState(false);
-  const {started, setStarted, setHoveredCols} = useGlobalContext();
 
   useLayoutEffect(() => {
-    if (!started) {
-      setHovered(false);
-    }
+    setHovered(false);
   }, [started]);
 
   const handleOver = () => {
 
-    if (!started) {
-      setStarted(true);
-    }
-
     if (hovered) {
-      setHoveredCols((prevArray) => prevArray.filter((item, i) => item !== id));
+      setHoveredCols((prevArray) => prevArray.filter(item => item !== id));
+
     } else {
       setHoveredCols((prevArray) => [...prevArray, id]);
     }
@@ -30,9 +25,9 @@ const Col:FC<ColProps> = ({id}) => {
     setHovered(!hovered);
   };
 
-  return (
+  return useMemo(() => (
     <div onMouseOver={handleOver} className={`gridItem ${hovered ? 'bg-pink-400' : 'bg-white'}`}></div>
-  );
+  ), [hovered]);
 };
 
-export default Col;
+export default React.memo(Col);

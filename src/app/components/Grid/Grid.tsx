@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from 'react';
 import "./grid.scss";
 import Col from "./Col";
+import GlobalContext from '../../hooks/useGlobalContext';
 
 interface GridProps {
   mode: number;
@@ -8,6 +9,7 @@ interface GridProps {
 
 const Grid:FC<GridProps> = ({mode}) => {
   const cols = Math.pow(mode, 2);
+  const {started, setHoveredCols} = useContext(GlobalContext);
 
   return (
     <div className={'grid'} style={{
@@ -16,11 +18,11 @@ const Grid:FC<GridProps> = ({mode}) => {
     }}>
       {
         mode && [...Array(cols)].map((item, i) =>
-          <Col key={`grid-${i}`} id={i}/>
+          <Col key={`grid-${i}`} id={i} started={started} setHoveredCols={setHoveredCols}/>
         )
       }
     </div>
   );
 };
 
-export default React.memo(Grid);
+export default Grid;
